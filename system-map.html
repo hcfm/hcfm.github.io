@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Weekly Report Workflow</title>
+<style>
+  :root{--navy:#1b2b4b;--gold:#bf9536;--ink:#212630;--muted:#616a78;--line:#e4e7ee;--bg:#f5f7fa;--green:#2f7d5b;--red:#b0402f;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.55}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px 72px}
+  header{background:linear-gradient(150deg,#1b2b4b,#274069);color:#fff;padding:36px 0 30px;margin-bottom:22px}
+  header .wrap{padding-bottom:0}
+  h1{font-family:Georgia,serif;font-size:30px;margin:0 0 6px;font-weight:600}
+  header p{margin:0;color:#dbe3f1;font-size:15.5px}
+  .places{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 10px}
+  .place{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 18px}
+  .place .k{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px}
+  .place .h{font-weight:700;color:var(--navy);font-size:16px}
+  .place .d{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .note{font-size:13px;color:var(--muted);margin:12px 2px 16px;padding-left:14px;border-left:3px solid var(--gold)}
+  .timer{background:#eef3ff;border:1px solid #c6d5f0;border-radius:12px;padding:16px 20px;margin:0 0 20px}
+  .timer h3{margin:0 0 8px;color:var(--navy);font-size:16.5px}
+  .timer p{margin:0 0 9px;font-size:14px}.timer p:last-child{margin-bottom:0}
+  .timer .b{color:var(--navy);font-weight:700}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:#fff;border:1px solid #cdd7ea;border-radius:6px;padding:1px 7px;color:#334}
+  .key{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 2px 12px;font-size:12.5px;color:var(--muted)}
+  .key span{display:flex;align-items:center;gap:6px}
+  .kb{width:15px;height:15px;border-radius:4px;border:1px solid #cfd5df}
+  .diagram{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;overflow-x:auto}
+  svg{display:block;min-width:980px;width:100%;height:auto}
+  .leg{font-size:13px;color:var(--muted);margin:6px 2px 0}.leg b{color:var(--navy)}
+  h2{font-family:Georgia,serif;color:var(--navy);font-size:22px;margin:42px 0 4px}
+  .sub{color:var(--muted);margin:0 0 16px;font-size:14.5px}
+  .why{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .wc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 16px}
+  .wc .n{font-weight:700;color:var(--navy);font-size:14.5px;margin-bottom:2px}
+  .wc .t{font-size:13.6px;color:#3b414c}
+  .protect{background:#fbeef0;border:1px solid #eecad0;border-left:5px solid var(--red);border-radius:12px;padding:16px 20px}
+  .protect h3{margin:0 0 8px;color:#8a2a3a;font-size:16.5px}
+  .protect p{margin:0 0 8px;font-size:14px}.protect ul{margin:6px 0 0;padding-left:18px;font-size:14px}
+  .protect li{margin-bottom:4px}
+  .info{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:14px}
+  .info h3{margin:0 0 6px;color:var(--navy);font-size:16px}
+  .info p{margin:0;font-size:14px}
+  .coming{background:#fdf6e8;border:1px solid #e6cf95;border-left:5px solid var(--gold);border-radius:12px;padding:16px 20px;margin-bottom:14px}
+  .coming h3{margin:0 0 8px;color:#8a6b17;font-size:16.5px}
+  .coming p{margin:0 0 8px;font-size:14px}
+  .coming p:last-child{margin-bottom:0}
+  .coming b{color:#7a5a12;font-weight:700}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13.6px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f0f2f6;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  td code{background:#eef1f6;color:#243;padding:1px 6px;border-radius:5px;font-size:12.3px;font-family:ui-monospace,Menlo,Consolas,monospace}
+  tr:last-child td{border-bottom:none}
+  .me-box{background:#fbf7ec;border:1px solid #ecdcb4;border-left:5px solid var(--gold);border-radius:12px;padding:18px 22px}
+  .me-box h3{margin:0 0 10px;color:var(--navy)}.me-box ul{margin:0;padding-left:18px}
+  .me-box li{margin-bottom:8px}.me-box b{color:var(--navy)}
+  @media(max-width:680px){.places,.why{grid-template-columns:1fr}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>The Weekly Report Workflow</h1>
+</div></header>
+
+<div class="wrap">
+
+  <div class="places">
+    <div class="place"><div class="k">Where I write it</div><div class="h">My code editor</div>
+      <div class="d">I build and fix the instructions in a program called VS Code. This is the writing side.</div></div>
+    <div class="place"><div class="k">Where it runs</div><div class="h">My computer, on its own</div>
+      <div class="d">The computer runs those instructions automatically each week. I open the Terminal only to test by hand.</div></div>
+  </div>
+  <p class="note">A "script" is just a small set of written instructions I created that does one job on its own, like "go get this week's website numbers." The report is a few of these running in order.</p>
+
+  <div class="timer">
+    <h3>How does it run itself?</h3>
+    <p>Your Mac has a built-in scheduler. I set a job that says <b>"every Monday at 6am, run the report,"</b> and the Mac runs it start to finish, then goes quiet until the next week. It is the computer's own clock, not an outside website or cloud service. It only needs the Mac to be on or able to wake at that time.</p>
+  </div>
+
+  <div class="key">
+    <span><span class="kb" style="background:#f3f7ff;border:1px dashed #9bb3e0"></span> My computer (runs locally)</span>
+    <span><span class="kb" style="background:#fbf3df;border-color:#e6cf95"></span> Me (my hands and judgment)</span>
+    <span><span class="kb" style="background:#e8f4ee;border-color:#bfe2cd"></span> Connected</span>
+    <span><span class="kb" style="background:#fdf3e2;border-color:#e6cf95"></span> Needs access (read-only)</span>
+    <span><span class="kb" style="background:#fbebe7;border-color:#e7b8ad"></span> Held back (a check failed)</span>
+    <span><span class="kb" style="background:#f4effb;border-color:#d8cbf0"></span> On the web</span>
+  </div>
+
+  <div class="diagram">
+  <svg viewBox="0 0 1100 1300" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6b7382"/></marker>
+      <marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#bf9536"/></marker>
+      <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#b0402f"/></marker>
+      <style>
+        .ttl{font:700 15px "Segoe UI",Arial,sans-serif;fill:#1b2b4b}
+        .dsc{font:13px "Segoe UI",Arial,sans-serif;fill:#3b414c}
+        .fx{font:11.5px ui-monospace,Menlo,Consolas,monospace;fill:#7a8290}
+        .fxme{font:italic 11.5px "Segoe UI",Arial,sans-serif;fill:#9a7a20}
+        .sm{font:12px "Segoe UI",Arial,sans-serif;fill:#5b6472}
+        .cap{font:600 11.5px "Segoe UI",Arial,sans-serif;fill:#6b7382}
+        .flow{stroke:#6b7382;stroke-width:2;fill:none}
+        .flowg{stroke:#bf9536;stroke-width:2.5;fill:none}
+        .flowr{stroke:#b0402f;stroke-width:2;fill:none}
+      </style>
+    </defs>
+
+    <rect x="248" y="30" width="586" height="1010" rx="16" fill="#f3f7ff" stroke="#b9c8ee" stroke-dasharray="7 5"/>
+    <text x="266" y="52" class="cap" fill="#3a5aa6">MY COMPUTER &#183; everything in this box runs here, on its own</text>
+
+    <!-- ME rail (3 notes) -->
+    <rect x="20" y="90" width="200" height="60" rx="10" fill="#fbf3df" stroke="#e6cf95"/>
+    <text x="34" y="114" class="ttl" font-size="13.5">I wrote every step</text>
+    <text x="34" y="134" class="sm">all of it is my code</text>
+    <line x1="220" y1="120" x2="248" y2="120" class="flowg" marker-end="url(#ag)"/>
+
+    <rect x="20" y="430" width="200" height="60" rx="10" fill="#fbf3df" stroke="#e6cf95"/>
+    <text x="34" y="454" class="ttl" font-size="13.5">If it breaks, I fix it</text>
+    <text x="34" y="474" class="sm">I repair the code</text>
+    <line x1="220" y1="460" x2="248" y2="460" class="flowg" marker-end="url(#ag)"/>
+
+
+    <!-- SPINE -->
+    <rect x="296" y="64" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="90" class="ttl">1 &#183; It starts on its own</text>
+    <text x="314" y="112" class="dsc">Every Monday at 6am, automatically.</text>
+    <text x="314" y="136" class="fx">timer: org.hcfm.weekly.plist</text>
+
+    <rect x="296" y="186" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="212" class="ttl">2 &#183; It collects the numbers</text>
+    <text x="314" y="234" class="dsc">Reads each platform, read-only.</text>
+    <text x="314" y="258" class="fx">runs: four *_pull.py scripts</text>
+
+    <rect x="296" y="308" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="334" class="ttl">3 &#183; It cleans and screens</text>
+    <text x="314" y="356" class="dsc">Removes bots; keeps real people.</text>
+    <text x="314" y="380" class="fx">runs: bot_filter.py</text>
+
+    <rect x="296" y="430" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="456" class="ttl">4 &#183; It saves everything</text>
+    <text x="314" y="478" class="dsc">The original, plus a clean copy.</text>
+    <text x="314" y="502" class="fx">to: data/raw + data/processed</text>
+
+    <rect x="296" y="552" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="578" class="ttl">5 &#183; It builds the report</text>
+    <text x="314" y="600" class="dsc">My layout and charts, with the data.</text>
+    <text x="314" y="624" class="fx">runs: stakeholder_reports.py</text>
+
+    <rect x="296" y="674" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="700" class="ttl">6 &#183; It runs my quality checks</text>
+    <text x="314" y="722" class="dsc">Fails a check, it is held, not sent.</text>
+    <text x="314" y="746" class="fx">runs: checklist.py</text>
+
+    <rect x="296" y="796" width="356" height="92" rx="11" fill="#fffaf0" stroke="#e0c06a" stroke-width="2"/>
+    <text x="314" y="822" class="ttl" fill="#8a6b17">7 &#183; I write the recommendations</text>
+    <text x="314" y="850" class="dsc">What the week means, and the actions I recommend.</text>
+
+    <rect x="296" y="918" width="356" height="92" rx="11" fill="#fff" stroke="#c6d5f0"/>
+    <text x="314" y="944" class="ttl">8 &#183; It sends the report out</text>
+    <text x="314" y="966" class="dsc">Pushed to the web; leaves my computer.</text>
+    <text x="314" y="990" class="fx">runs: publish_site.py</text>
+
+    <line x1="474" y1="156" x2="474" y2="186" class="flow" marker-end="url(#a)"/>
+    <line x1="474" y1="278" x2="474" y2="308" class="flow" marker-end="url(#a)"/>
+    <line x1="474" y1="400" x2="474" y2="430" class="flow" marker-end="url(#a)"/>
+    <line x1="474" y1="522" x2="474" y2="552" class="flow" marker-end="url(#a)"/>
+    <line x1="474" y1="644" x2="474" y2="674" class="flow" marker-end="url(#a)"/>
+    <line x1="474" y1="766" x2="474" y2="796" class="flow" marker-end="url(#a)"/>
+    <line x1="474" y1="888" x2="474" y2="918" class="flow" marker-end="url(#a)"/>
+
+    <!-- PLATFORMS -->
+    <rect x="858" y="152" width="224" height="266" rx="12" fill="#fbfdff" stroke="#cdd7ea"/>
+    <text x="872" y="176" class="cap">READS FROM &#183; read-only</text>
+    <rect x="872" y="186" width="196" height="40" rx="6" fill="#fdf3e2" stroke="#e6cf95"/>
+    <text x="884" y="203" class="sm" fill="#9a6b17">Google Analytics</text>
+    <text x="884" y="219" class="cap" fill="#9a6b17">needs read access</text>
+    <rect x="872" y="232" width="196" height="40" rx="6" fill="#e8f4ee" stroke="#bfe2cd"/>
+    <text x="884" y="249" class="sm" fill="#2f7d5b">Meta (FB &amp; Instagram)</text>
+    <text x="884" y="265" class="cap" fill="#2f7d5b">connected</text>
+    <rect x="872" y="278" width="196" height="40" rx="6" fill="#e8f4ee" stroke="#bfe2cd"/>
+    <text x="884" y="295" class="sm" fill="#2f7d5b">YouTube</text>
+    <text x="884" y="311" class="cap" fill="#2f7d5b">connected</text>
+    <rect x="872" y="324" width="196" height="40" rx="6" fill="#fdf3e2" stroke="#e6cf95"/>
+    <text x="884" y="341" class="sm" fill="#9a6b17">Search Console</text>
+    <text x="884" y="357" class="cap" fill="#9a6b17">needs read access</text>
+    <rect x="872" y="370" width="196" height="40" rx="6" fill="#fdf3e2" stroke="#e6cf95"/>
+    <text x="884" y="387" class="sm" fill="#9a6b17">HubSpot</text>
+    <text x="884" y="403" class="cap" fill="#9a6b17">needs a token</text>
+    <line x1="652" y1="210" x2="858" y2="210" class="flow" marker-end="url(#a)"/>
+    <text x="700" y="203" class="cap">asks for the week</text>
+    <line x1="858" y1="250" x2="652" y2="250" class="flow" marker-end="url(#a)"/>
+    <text x="700" y="268" class="cap">numbers come back</text>
+
+    <!-- STORAGE -->
+    <rect x="664" y="430" width="150" height="92" rx="10" fill="#fff" stroke="#c6d5f0"/>
+    <text x="676" y="452" class="ttl" font-size="13">Saved here</text>
+    <text x="676" y="472" class="sm">original + clean copy</text>
+    <text x="676" y="490" class="sm">history + backup</text>
+    <text x="676" y="510" class="cap">steps 5&#8211;7 read this</text>
+    <line x1="652" y1="466" x2="664" y2="470" class="flow" marker-end="url(#a)"/>
+
+    <!-- HELD + why -->
+    <rect x="664" y="678" width="150" height="66" rx="10" fill="#fbebe7" stroke="#e7b8ad"/>
+    <text x="676" y="702" class="ttl" font-size="13" fill="#8a2f22">Held back</text>
+    <text x="676" y="722" class="sm">I review and rerun</text>
+    <text x="664" y="764" class="cap" fill="#8a2f22">held if a check fails,</text>
+    <text x="664" y="778" class="cap" fill="#8a2f22">so we never ship</text>
+    <text x="664" y="792" class="cap" fill="#8a2f22">a wrong number</text>
+    <line x1="652" y1="710" x2="664" y2="710" class="flowr" marker-end="url(#ar)"/>
+
+    <!-- leaves -->
+    <line x1="474" y1="1010" x2="474" y2="1066" class="flowg" marker-end="url(#ag)"/>
+    <text x="486" y="1044" class="cap" fill="#9a7a20">sent to the web</text>
+
+    <rect x="296" y="1066" width="356" height="88" rx="11" fill="#f4effb" stroke="#d8cbf0"/>
+    <text x="314" y="1092" class="ttl">9 &#183; A web page serves it</text>
+    <text x="314" y="1114" class="dsc">Holds the live link the team opens.</text>
+    <text x="314" y="1138" class="fx">GitHub Pages (hcfm.github.io)</text>
+    <line x1="474" y1="1154" x2="474" y2="1190" class="flow" marker-end="url(#a)"/>
+
+    <rect x="296" y="1190" width="356" height="80" rx="11" fill="#fff" stroke="#cfd5df"/>
+    <text x="314" y="1216" class="ttl">10 &#183; The team opens the link</text>
+    <text x="314" y="1238" class="dsc">Colum, Victoria, and leadership.</text>
+    <text x="314" y="1262" class="fx">each Monday, one link</text>
+  </svg>
+  </div>
+
+  <h2>Why a report gets "held," and what that protects</h2>
+  <div class="protect">
+    <h3>The gate chooses "nothing" over "wrong"</h3>
+    <p>I built this because the biggest risk in reporting is sending a wrong or incomplete number to leadership and having them act on it. Before any report goes out it must pass a checklist I wrote. If any blocking check fails, the report is held and nothing is sent until I look at it. It protects the reporting against:</p>
+    <ul>
+      <li>A data pull that failed or came back empty, so a section would be blank or misleading.</li>
+      <li>Numbers that do not reconcile, or a figure that cannot be verified against the platform.</li>
+      <li>Bot-inflated or non-human traffic slipping through into a headline number.</li>
+      <li>A week that is missing days of data, which would understate or overstate performance.</li>
+      <li>Any percentage shown without the real count behind it.</li>
+    </ul>
+    <p style="margin-top:8px">A held report is the system working correctly. It is far better to send nothing and fix it than to send something inaccurate that gets repeated upstairs.</p>
+  </div>
+
+  <h2>The details that answer the rest</h2>
+  <div class="coming">
+    <h3>HubSpot: part of the system, waiting on its token</h3>
+    <p>HubSpot is part of the reporting system. It just needs its API token to run, exactly the way Google Analytics and Search Console need read access. It measures who actually acted: email opens and clicks, form submissions, new contacts, and the Global Rosary sign-ups tied to our tracking codes. That is the step past reach, from "people saw it" to "people signed up," which is often what leadership most wants to know. Without it, the report can show that a reel reached millions but not how many of them registered.</p>
+    <p><b>What it needs:</b> a read-only API token, a HubSpot "Private App," created by our HubSpot admin. Only an admin can issue it. The moment it is in place, HubSpot's numbers flow into the weekly report like every other source.</p>
+  </div>
+  <div class="info"><h3>How it connects to each platform</h3>
+    <p>Each platform needs its own read-only key or login for the automation to read it. Meta and YouTube are connected. Google Analytics and Search Console share one Google access, which still needs read access granted. HubSpot is part of the system too; it just needs its own read-only API token from our HubSpot admin, the same way Google Analytics needs read access. Every connection is read-only: it can pull numbers, never change, post, or configure anything.</p></div>
+  <div class="info"><h3>If something goes wrong</h3>
+    <p>Every run writes a log I can read. If a pull fails or a check does not pass, the run holds instead of shipping, and I see it in the log and fix the code. Nothing broken ever reaches the team silently.</p></div>
+  <div class="info"><h3>How much it covers</h3>
+    <p>Every week it pulls from 15+ website properties, 8 social accounts, and 4 YouTube channels, cleans it, and turns it into the reports, on its own. HubSpot (email and sign-ups) is the fifth source; it flows in the same way the moment its token is granted.</p></div>
+
+  <h2>For the technical reader</h2>
+  <p class="sub">The same steps with the actual file behind each, and where it runs.</p>
+  <table>
+    <tr><th>Step</th><th>The actual file</th><th>Where it runs</th></tr>
+    <tr><td>1 &middot; Starts on its own</td><td><code>org.hcfm.weekly.plist</code> (launchd timer) &rarr; <code>monday_run.py</code></td><td>My computer</td></tr>
+    <tr><td>2 &middot; Collect</td><td><code>ga4_api_pull.py</code>, <code>meta_api_pull.py</code>, <code>youtube_api_pull.py</code>, <code>search_console_api_pull.py</code></td><td>My computer, reading each platform</td></tr>
+    <tr><td>3 &middot; Clean</td><td><code>bot_filter.py</code></td><td>My computer</td></tr>
+    <tr><td>4 &middot; Save</td><td><code>data/raw</code>, <code>data/processed</code>, backups</td><td>My computer</td></tr>
+    <tr><td>5 &middot; Build</td><td><code>stakeholder_reports.py</code></td><td>My computer</td></tr>
+    <tr><td>6 &middot; Quality checks</td><td><code>checklist.py</code></td><td>My computer</td></tr>
+    <tr><td>7 &middot; Recommendations</td><td>my review of the checked report</td><td>Me</td></tr>
+    <tr><td>8 &middot; Send</td><td><code>publish_site.py</code></td><td>My computer &rarr; the web</td></tr>
+    <tr><td>9 &middot; Host and serve</td><td>GitHub Pages (<code>hcfm.github.io</code>)</td><td>On the web</td></tr>
+    <tr><td>10 &middot; Read</td><td>the weekly link</td><td>The team's browsers</td></tr>
+    <tr><td>HubSpot</td><td>email + sign-ups &middot; needs its read-only API token</td><td>My computer</td></tr>
+  </table>
+
+
+</div>
+</body>
+</html>
