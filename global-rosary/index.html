@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Global Rosary for Peace — Live</title>
+<meta name="description" content="Live count of families and individuals committed to praying the Global Rosary for Peace on 22 October 2026.">
+<meta property="og:title" content="Global Rosary for Peace — Live">
+<meta property="og:description" content="Praying together. 22 October 2026.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c0d0f'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23FFB500' stroke-width='2.5'/%3E%3C/svg%3E">
+<style>
+  /* ---- HCFM brand webfonts, served from hcfm.org (licensed, CORS open) ---- */
+  @font-face{font-family:Calluna;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Calluna/CallunaLight.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap}
+  @font-face{font-family:Calluna;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Calluna/CallunaRegular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:Calluna;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Calluna/CallunaSemibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:Calluna;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Calluna/CallunaBold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:Whitney;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Whitney/WhitneyBook.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:Whitney;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Whitney/WhitneyMedium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:Whitney;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Whitney/WhitneySemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:PlaylistScript;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Playlist/PlaylistScript.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+
+  :root{
+    --gold:#FFB500; --bronze:#89764B;
+    --ink:#000; --ink2:#4a4a4a; --ink3:#8a8a8a;
+    --paper:#fff; --dark:#0c0d0f; --hair:#e2ddd2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);
+       font:400 clamp(18px,1.15vw,23px)/1.7 Calluna,Georgia,serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1680px;margin:0 auto;padding:0 clamp(28px,3.6vw,68px)}
+
+  /* ================= dark band ================= */
+  .band{background:var(--dark);color:#fff;padding:clamp(34px,3.4vw,54px) 0 clamp(40px,4vw,62px);text-align:center}
+  .script{font-family:PlaylistScript,cursive;font-weight:700;color:var(--gold);
+          font-size:clamp(38px,4.6vw,74px);line-height:1;margin-bottom:2px}
+  .band h1{font-family:Calluna,Georgia,serif;font-weight:300;color:#fff;
+           font-size:clamp(38px,5.4vw,86px);letter-spacing:-.015em;line-height:1.1}
+  .when{font-family:Whitney,sans-serif;font-weight:500;text-transform:uppercase;
+        font-size:clamp(12px,.82vw,16px);letter-spacing:.2em;
+        color:rgba(255,255,255,.5);margin-top:clamp(14px,1.3vw,22px)}
+
+  .pair{display:grid;grid-template-columns:1fr 1px 1fr;
+        margin-top:clamp(34px,3.6vw,60px);align-items:start}
+  .vr{background:rgba(255,255,255,.16);height:100%;min-height:clamp(150px,15vw,260px)}
+  .half{padding:0 clamp(20px,3vw,60px)}
+  .n{font-family:Calluna,Georgia,serif;font-weight:300;color:#fff;
+     font-size:clamp(72px,11.4vw,196px);line-height:.9;letter-spacing:-.035em;
+     font-variant-numeric:tabular-nums}
+  .n.gold{color:var(--gold)}
+  .n.flash{animation:fade 1.1s ease-out}
+  @keyframes fade{0%{opacity:.28}100%{opacity:1}}
+  .n-l{font-family:Whitney,sans-serif;font-weight:600;text-transform:uppercase;
+       font-size:clamp(12px,1vw,19px);letter-spacing:.22em;
+       color:rgba(255,255,255,.8);margin-top:clamp(18px,1.7vw,30px)}
+  .n-s{font-family:Whitney,sans-serif;font-size:clamp(13px,.85vw,17px);
+       color:rgba(255,255,255,.45);margin-top:9px}
+
+  /* ================= stat strip ================= */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);
+         border-bottom:1px solid var(--hair);padding:clamp(28px,2.8vw,48px) 0}
+  .strip div{text-align:center;border-right:1px solid var(--hair)}
+  .strip div:last-child{border-right:0}
+  .strip .v{font-family:Calluna,serif;font-size:clamp(34px,3.4vw,60px);
+            line-height:1;font-variant-numeric:tabular-nums}
+  .strip .k{font-family:Whitney,sans-serif;font-weight:600;text-transform:uppercase;
+            font-size:clamp(10px,.72vw,14px);letter-spacing:.19em;
+            color:var(--ink3);margin-top:clamp(10px,.9vw,16px)}
+
+  /* ================= countries ================= */
+  section.countries{padding:clamp(40px,4vw,68px) 0 clamp(24px,2vw,36px)}
+  h2{font-family:Whitney,sans-serif;font-weight:600;text-transform:uppercase;
+     font-size:clamp(11px,.78vw,15px);letter-spacing:.26em;color:var(--bronze);
+     margin-bottom:clamp(18px,1.6vw,28px)}
+
+  /* grid: fills wide screens, wraps to more columns as countries grow */
+  #grid{display:grid;gap:0 clamp(30px,3.4vw,72px);
+        grid-template-columns:repeat(auto-fill,minmax(min(100%,480px),1fr))}
+  .row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+       gap:clamp(14px,1.4vw,26px);padding:clamp(16px,1.5vw,26px) 0;
+       border-bottom:1px solid var(--hair)}
+  .rk{font-family:Whitney,sans-serif;font-size:clamp(12px,.8vw,16px);
+      color:var(--ink3);font-variant-numeric:tabular-nums;min-width:1.4em}
+  .cty{font-family:Calluna,serif;font-size:clamp(22px,1.75vw,34px);line-height:1.2}
+  .cty .bar{height:clamp(5px,.42vw,8px);background:#f0ece2;border-radius:4px;
+            overflow:hidden;margin-top:clamp(8px,.7vw,12px);max-width:88%}
+  .cty .bar i{display:block;height:100%;background:var(--bronze);border-radius:4px;
+              transition:width .9s cubic-bezier(.4,0,.2,1)}
+  .num{text-align:right;font-family:Calluna,serif;
+       font-size:clamp(28px,2.5vw,48px);line-height:1;font-variant-numeric:tabular-nums}
+  .num small{display:block;font-family:Whitney,sans-serif;
+             font-size:clamp(11px,.72vw,14px);color:var(--ink3);
+             margin-top:7px;letter-spacing:.05em;font-weight:500}
+  .empty{text-align:center;color:var(--ink3);padding:clamp(40px,4vw,70px) 0;
+         font-size:clamp(18px,1.3vw,26px)}
+
+  footer{font-family:Whitney,sans-serif;text-align:center;
+         padding:clamp(20px,2vw,34px) 0 clamp(34px,3.4vw,58px);
+         border-top:1px solid var(--hair);
+         color:var(--ink3);font-size:clamp(12px,.8vw,15px);letter-spacing:.08em}
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;
+       background:#5a9a6f;margin-right:9px;vertical-align:middle}
+  .dot.stale{background:#b8763c}
+
+  @media(max-width:860px){
+    .pair{grid-template-columns:1fr}
+    .vr{width:100%;height:1px;min-height:0;margin:30px 0}
+    .half{padding:0}
+    .strip{grid-template-columns:repeat(2,1fr);row-gap:28px}
+    .strip div:nth-child(2){border-right:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="wrap">
+    <div class="script">Praying together</div>
+    <h1>Global Rosary for Peace</h1>
+    <div class="when">22 October 2026 &nbsp;·&nbsp; <span id="days">—</span> days remaining</div>
+
+    <div class="pair">
+      <div class="half">
+        <div class="n gold" id="committed">—</div>
+        <div class="n-l">Praying with us</div>
+        <div class="n-s" id="regline">&nbsp;</div>
+      </div>
+      <div class="vr"></div>
+      <div class="half">
+        <div class="n" id="remaining">—</div>
+        <div class="n-l">Still to reach 250,000</div>
+        <div class="n-s" id="pct">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="strip">
+    <div><div class="v" id="s-reg">—</div><div class="k">Registrations</div></div>
+    <div><div class="v" id="s-cty">—</div><div class="k">Countries</div></div>
+    <div><div class="v" id="s-week">—</div><div class="k">This Week</div></div>
+    <div><div class="v" id="s-homes">—</div><div class="k">Rosary Homes</div></div>
+  </div>
+
+  <section class="countries">
+    <h2>By Country</h2>
+    <div id="grid"></div>
+    <div class="empty" id="empty" style="display:none">Waiting for the first registrations</div>
+  </section>
+
+  <footer><span class="dot" id="dot"></span><span id="updated">connecting…</span></footer>
+</div>
+
+<script src="rosary-config.js" onerror="window.__noconfig=1"></script>
+<script>
+const SUPABASE_URL = "https://fuijdbeifajbmkchldiz.supabase.co";
+const SUPABASE_KEY = window.SUPABASE_KEY || "";
+const GOAL = 250000, EVENT_DATE = "2026-10-22", REFRESH_MS = 30000, PAGE = 1000;
+
+/* ------------------------------------------------------------------
+   TEMPORARY — staff and developer test rows.
+
+   This is a BLOCKLIST, not an allowlist: anything NOT listed here is
+   treated as a real registration and appears immediately. That is the
+   point — a genuine new sign-up must never need a code change to count.
+
+   31 rows, frozen 31 July 2026, matched on the first 12 hex characters
+   of the row id.
+
+   DELETE this block and set EXCLUDE_TESTS = false once the developer
+   adds an is_test column and filters it out of public_registrations.
+------------------------------------------------------------------ */
+const EXCLUDE_TESTS = true;
+const TEST_IDS = ["cf28e8d2-4efd","d5c0dc5f-5336","aeb87849-ecd0","26091812-9acd",
+"9e63f690-c7b9","e62bbb8e-2565","8d1b87a6-73bd","c05f0e49-4ce7","85f273e3-0fef",
+"a2c04d38-d305","c52dca52-cf38","8c1cc9d6-0024","58da4526-66c1","a1a079f4-09e0",
+"05976966-c77c","d03586d8-559a","efb4b09a-b3cc","39fb14cc-95b3","eff01ddf-3daa",
+"5da7493f-3882","04cef8f1-e2a4","d51afc91-6088","1ec4920f-a286","fce17567-ee04",
+"1efc99b9-4d7f","741ca30c-f818","99552314-9e22","4d3ff981-8fa1","de82ee0e-f48f",
+"88287696-0d9a","62c3f2ac-b971"];
+const TEST_SET = new Set(TEST_IDS);
+const isTest = r => TEST_SET.has((r.id || "").slice(0,13));
+
+const $   = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("en-US");
+/* group_count is the total INCLUDING the registrant, so blank or 0 still counts as one */
+const peopleIn = r => Math.max(parseInt(r.group_count) || 0, 1);
+let last = {committed:null, remaining:null};
+
+/* days remaining doesn't depend on the data — show it immediately */
+$("days").textContent = Math.max(0, Math.ceil((new Date(EVENT_DATE) - new Date())/864e5));
+
+const TIDY = {USA:"United States", US:"United States", "U.S.A.":"United States",
+              UK:"United Kingdom", "U.K.":"United Kingdom"};
+function countryOf(r){
+  const t = (r.place_formatted||"").split(",").pop().trim();
+  return TIDY[t] || t || "Unknown";
+}
+function esc(s){ return s.replace(/[<>&]/g, m => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[m])); }
+
+function animate(el, from, to){
+  if(from === null){ el.textContent = fmt(to); return; }
+  if(from === to) return;
+  const steps=30; let i=0;
+  (function tick(){ i++;
+    el.textContent = fmt(Math.round(from + (to-from)*(1-Math.pow(1-i/steps,3))));
+    if(i<steps) requestAnimationFrame(tick);
+    else{ el.textContent=fmt(to); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1100);} })();
+}
+
+function render(rows){
+  if(EXCLUDE_TESTS) rows = rows.filter(r => !isTest(r));
+
+  const people = rows.reduce((a,r) => a + peopleIn(r), 0);
+  animate($("committed"), last.committed, people); last.committed = people;
+  const left = Math.max(0, GOAL - people);
+  animate($("remaining"), last.remaining, left);   last.remaining = left;
+
+  $("regline").textContent = `across ${fmt(rows.length)} registration${rows.length===1?"":"s"}`;
+  const pct = people/GOAL*100;
+  $("pct").textContent = pct < 1 ? "of our 250,000 goal" : pct.toFixed(1)+"% of the way there";
+
+  const by = {};
+  rows.forEach(r => { const c = countryOf(r); (by[c] = by[c] || {people:0, count:0});
+                      by[c].people += peopleIn(r); by[c].count++; });
+  const list = Object.entries(by).sort((a,b) => b[1].people - a[1].people || a[0].localeCompare(b[0]));
+
+  $("s-reg").textContent  = fmt(rows.length);
+  $("s-cty").textContent  = fmt(list.length);
+  const wk = Date.now() - 7*864e5;
+  $("s-week").textContent = fmt(rows.filter(r => new Date(r.created_at) > wk).length);
+  $("s-homes").textContent= fmt(rows.filter(r => r.is_family_rosary_home === true
+                                              || r.pin_type === "family_rosary_home").length);
+
+  const max = list.length ? list[0][1].people : 1;
+  $("grid").innerHTML = list.map(([c,v],i) => `
+    <div class="row">
+      <div class="rk">${i+1}</div>
+      <div class="cty">${esc(c)}
+        <div class="bar"><i style="width:${Math.max(2, v.people/max*100)}%"></i></div>
+      </div>
+      <div class="num">${fmt(v.people)}<small>${v.count} registration${v.count===1?"":"s"}</small></div>
+    </div>`).join("");
+  $("empty").style.display = list.length ? "none" : "block";
+}
+
+/* PostgREST returns at most 1000 rows per request. Page through with the
+   Range header so the total stays correct all the way to 250,000. */
+async function fetchAll(){
+  const url = `${SUPABASE_URL}/rest/v1/public_registrations`
+            + `?select=id,group_count,place_formatted,pin_type,is_family_rosary_home,created_at`
+            + `&order=created_at.desc`;
+  const auth = {apikey:SUPABASE_KEY, Authorization:"Bearer "+SUPABASE_KEY};
+  let from = 0, all = [];
+  for(;;){
+    const r = await fetch(url, {headers:{...auth,
+      "Range-Unit":"items", Range:`${from}-${from+PAGE-1}`}});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const batch = await r.json();
+    all = all.concat(batch);
+    if(batch.length < PAGE || all.length > 400000) break;
+    from += PAGE;
+  }
+  return all;
+}
+
+async function load(){
+  if(!SUPABASE_KEY){
+    $("dot").classList.add("stale");
+    $("updated").textContent = "No key found — add rosary-config.js beside this file";
+    return;
+  }
+  try{
+    render(await fetchAll());
+    $("dot").classList.remove("stale");
+    $("updated").textContent = "Live · updated " +
+      new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+  }catch(e){
+    $("dot").classList.add("stale");
+    $("updated").textContent = "Reconnecting — showing last known figures";
+  }
+}
+load();
+setInterval(() => { if(!document.hidden) load(); }, REFRESH_MS);
+document.addEventListener("visibilitychange", () => { if(!document.hidden) load(); });
+</script>
+</body>
+</html>
