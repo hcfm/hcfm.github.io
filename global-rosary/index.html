@@ -165,7 +165,7 @@ const GOAL = 250000, EVENT_DATE = "2026-10-22", REFRESH_MS = 30000, PAGE = 1000;
    treated as a real registration and appears immediately. That is the
    point — a genuine new sign-up must never need a code change to count.
 
-   31 rows, frozen 31 July 2026, matched on the first 12 hex characters
+   32 rows, frozen 31 July 2026, matched on the first 12 hex characters
    of the row id.
 
    DELETE this block and set EXCLUDE_TESTS = false once the developer
@@ -178,7 +178,8 @@ const TEST_IDS = ["cf28e8d2-4efd","d5c0dc5f-5336","aeb87849-ecd0","26091812-9acd
 "05976966-c77c","d03586d8-559a","efb4b09a-b3cc","39fb14cc-95b3","eff01ddf-3daa",
 "5da7493f-3882","04cef8f1-e2a4","d51afc91-6088","1ec4920f-a286","fce17567-ee04",
 "1efc99b9-4d7f","741ca30c-f818","99552314-9e22","4d3ff981-8fa1","de82ee0e-f48f",
-"88287696-0d9a","62c3f2ac-b971"];
+"88287696-0d9a","62c3f2ac-b971",
+"8295b117-5b5e"];   /* Emmanuel Epau — own test of the live form, 31 Jul 23:42 */
 const TEST_SET = new Set(TEST_IDS);
 const isTest = r => TEST_SET.has((r.id || "").slice(0,13));
 
