@@ -1,0 +1,6 @@
+# Cloudflare Pages Functions. This repo is PUBLIC GitHub Pages: functions never run here,
+# and _middleware.js carries the staff email allow-list, so it must not be published.
+functions/
+
+.DS_Store
+archive/
