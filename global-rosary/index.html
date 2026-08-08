@@ -8,7 +8,7 @@
 <meta property="og:title" content="Global Rosary for Peace — Live">
 <meta property="og:description" content="Praying together. 22 October 2026.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c0d0f'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23FFB500' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230047BB'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23FFB500' stroke-width='2.5'/%3E%3C/svg%3E">
 <style>
   /* ---- HCFM brand webfonts, served from hcfm.org (licensed, CORS open) ---- */
   @font-face{font-family:Calluna;src:url("https://hcfm.org/wp-content/themes/hcfm/build/fonts/Calluna/CallunaLight.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap}
@@ -23,7 +23,7 @@
   :root{
     --gold:#FFB500; --bronze:#89764B;
     --ink:#000; --ink2:#4a4a4a; --ink3:#8a8a8a;
-    --paper:#fff; --dark:#0c0d0f; --hair:#e2ddd2;
+    --paper:#fff; --dark:#0047BB; --hair:#e2ddd2;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--paper);color:var(--ink);
@@ -31,14 +31,20 @@
   .wrap{max-width:1680px;margin:0 auto;padding:0 clamp(28px,3.6vw,68px)}
 
   /* ================= dark band ================= */
-  .band{background:var(--dark);color:#fff;padding:clamp(34px,3.4vw,54px) 0 clamp(40px,4vw,62px);text-align:center}
+  /* Band is HCFM blue, matching the hero on the weekly reports landing page, so a reader arriving
+     from there sees one system rather than two. var(--dark) is the flat fallback for anything that
+     cannot render a gradient. */
+  .band{background:var(--dark);
+        background:radial-gradient(1200px 520px at 82% -10%,#0A5BE0 0%,rgba(10,91,224,0) 60%),
+                   linear-gradient(135deg,#0047BB 0%,#022B76 100%);
+        color:#fff;padding:clamp(34px,3.4vw,54px) 0 clamp(40px,4vw,62px);text-align:center}
   .script{font-family:PlaylistScript,cursive;font-weight:700;color:var(--gold);
           font-size:clamp(38px,4.6vw,74px);line-height:1;margin-bottom:2px}
   .band h1{font-family:Calluna,Georgia,serif;font-weight:300;color:#fff;
            font-size:clamp(38px,5.4vw,86px);letter-spacing:-.015em;line-height:1.1}
   .when{font-family:Whitney,sans-serif;font-weight:500;text-transform:uppercase;
         font-size:clamp(12px,.82vw,16px);letter-spacing:.2em;
-        color:rgba(255,255,255,.5);margin-top:clamp(14px,1.3vw,22px)}
+        color:rgba(255,255,255,.68);margin-top:clamp(14px,1.3vw,22px)}
 
   .pair{display:grid;grid-template-columns:1fr 1px 1fr;
         margin-top:clamp(34px,3.6vw,60px);align-items:start}
@@ -54,7 +60,7 @@
        font-size:clamp(12px,1vw,19px);letter-spacing:.22em;
        color:rgba(255,255,255,.8);margin-top:clamp(18px,1.7vw,30px)}
   .n-s{font-family:Whitney,sans-serif;font-size:clamp(13px,.85vw,17px);
-       color:rgba(255,255,255,.45);margin-top:9px}
+       color:rgba(255,255,255,.75);margin-top:9px}
 
   /* ================= stat strip ================= */
   .strip{display:grid;grid-template-columns:repeat(4,1fr);
@@ -172,16 +178,76 @@ const GOAL = 250000, EVENT_DATE = "2026-10-22", REFRESH_MS = 30000, PAGE = 1000;
    adds an is_test column and filters it out of public_registrations.
 ------------------------------------------------------------------ */
 const EXCLUDE_TESTS = true;
-const TEST_IDS = ["cf28e8d2-4efd","d5c0dc5f-5336","aeb87849-ecd0","26091812-9acd",
+
+/* The moment this dashboard went live: the first commit that deployed it, from
+   `git log --diff-filter=A -- global-rosary/index.html` in the hcfm.github.io repo.
+   2026-07-31 17:37:50 -0400.
+
+   This date is the whole design. Before it, the form was being exercised by staff and
+   developers and nothing was ever cleared out, so those rows are noise. From it onward,
+   every submission is a real person who found the page and signed up.
+
+   So the blocklist below applies ONLY to rows created before this moment. A row that
+   arrives after it is counted, always, no matter what. The list cannot reach forward in
+   time and quietly delete somebody.
+
+   That is deliberately fail-open: if a genuine test is submitted from now on it will be
+   counted until a human adds it to POST_LAUNCH_TESTS. That is the right way round for a
+   public page. Under-counting a real parish is invisible and permanent; over-counting by
+   one is visible and fixable. */
+const LIVE_SINCE = Date.parse("2026-07-31T21:37:50Z");
+
+/* Pre-launch noise. Identified 30 Jul by email address (mailinator throwaways,
+   test@test.com, staff @hcfm.org addresses, a fake testgmail.com domain), plus repeat
+   burst submissions and impossible group counts. Frozen, and only ever applied to rows
+   older than LIVE_SINCE, so it can never grow teeth again.
+
+   AUDITED against the registrations table 8 Aug 2026, all 43 rows, nine signals each.
+   Every entry below is here for a stated reason:
+
+     TEST DOMAIN      d5c0dc5f test1.com   aeb87849 test.com   e62bbb8e testgmail.com
+     MAILINATOR       26091812  eff01ddf  04cef8f1  d51afc91  1efc99b9
+     HCFM STAFF       c05f0e49  a2c04d38  a1a079f4  05976966  fce17567  741ca30c  99552314
+     STAFF DOMAIN     4d3ff981 columdevine.com   8c1cc9d6 up.edu (office priest)
+     ONE EMAIL x4     cf28e8d2  8d1b87a6  1ec4920f  88287696
+                      One gmail address: clergy in Bugembe Uganda, then parent at
+                      8 Meadow Rd Townsend MA, then the SAME address again nine days
+                      later with an identical group of 7, then parent in Belfast.
+                      One person exercising the form, not four registrations.
+     ONE EMAIL x5     9e63f690  d03586d8  efb4b09a  39fb14cc  62c3f2ac
+                      All Pakistan, group counts to 735. The Usman Asghar cluster.
+     PAIRED EMAIL     85f273e3  c52dca52  58da4526  5da7493f  de82ee0e
+
+   NOTE ON cf28e8d2: briefly removed from this list earlier on 8 Aug, on the strength
+   of an ordinary gmail.com domain and a plausible parish. That was wrong. Asking only
+   for the domain hid the fact that the same address appears on four rows across three
+   continents. Restored. Domain alone is not evidence; ask what else shares the address.
+
+   The blocklist only ever applies before LIVE_SINCE, so none of this can reach a real
+   registration made after launch. */
+const PRELAUNCH_TESTS = new Set([
+"cf28e8d2-4efd","d5c0dc5f-5336","aeb87849-ecd0","26091812-9acd",
 "9e63f690-c7b9","e62bbb8e-2565","8d1b87a6-73bd","c05f0e49-4ce7","85f273e3-0fef",
 "a2c04d38-d305","c52dca52-cf38","8c1cc9d6-0024","58da4526-66c1","a1a079f4-09e0",
 "05976966-c77c","d03586d8-559a","efb4b09a-b3cc","39fb14cc-95b3","eff01ddf-3daa",
 "5da7493f-3882","04cef8f1-e2a4","d51afc91-6088","1ec4920f-a286","fce17567-ee04",
 "1efc99b9-4d7f","741ca30c-f818","99552314-9e22","4d3ff981-8fa1","de82ee0e-f48f",
-"88287696-0d9a","62c3f2ac-b971",
-"8295b117-5b5e"];   /* Emmanuel Epau — own test of the live form, 31 Jul 23:42 */
-const TEST_SET = new Set(TEST_IDS);
-const isTest = r => TEST_SET.has((r.id || "").slice(0,13));
+"88287696-0d9a","62c3f2ac-b971"]);
+
+/* Tests submitted AFTER launch. Only ever added by hand, by a person who knows the row is
+   not a real registration. Keep this list as close to empty as the truth allows. */
+const POST_LAUNCH_TESTS = new Set([
+"8295b117-5b5e"]);   /* Emmanuel Epau, own test of the live form, 31 Jul 23:42 */
+
+const isTest = r => {
+  const key = (r.id || "").slice(0,13);
+  if (POST_LAUNCH_TESTS.has(key)) return true;
+  // A row with no usable timestamp is treated as pre-launch, so the old list still catches
+  // it. Failing the other way would let every blocklisted row back in on a parse error.
+  const t = Date.parse(r.created_at);
+  if (!Number.isFinite(t) || t < LIVE_SINCE) return PRELAUNCH_TESTS.has(key);
+  return false;
+};
 
 const $   = id => document.getElementById(id);
 const fmt = n => n.toLocaleString("en-US");
@@ -192,11 +258,144 @@ let last = {committed:null, remaining:null};
 /* days remaining doesn't depend on the data — show it immediately */
 $("days").textContent = Math.max(0, Math.ceil((new Date(EVENT_DATE) - new Date())/864e5));
 
-const TIDY = {USA:"United States", US:"United States", "U.S.A.":"United States",
-              UK:"United Kingdom", "U.K.":"United Kingdom"};
+/* ── Country resolution ─────────────────────────────────────────────────
+   Order of preference:
+     1. country_code — ISO 3166-1 alpha-2, written by the registration app
+     2. the country name at the tail of place_formatted, normalised
+     3. "Unknown" — never a postcode, never a US state fragment
+
+   country_code is null on every row as of 7 August 2026. It is read FIRST
+   anyway, so the day the developer starts populating it this file needs no
+   change: the text parse simply stops being used.
+
+   Northern Ireland is a deliberate choice, not an accident. Google returns
+   "UK" for Omagh and Greencastle. Set this to "Ireland" if HCFM would
+   rather see it counted with the Republic.                                */
+const NORTHERN_IRELAND_AS = "Northern Ireland";
+/* Set to "Northern Ireland" by Emmy, 8 Aug 2026, after an audit found that every person
+   on the "United Kingdom" line was in fact in Co. Tyrone or Northern Ireland: 101 of the
+   118 people on the board, and no counted registration from Great Britain at all.
+
+   Colum kept saying an Irish parish had signed up and kept not finding Ireland on the
+   board. He meant Fr James Devine of St Patrick's, Greencastle, Co. Tyrone, whose BT
+   postcode Google returns as "UK".
+
+   Its own line rather than folded into either country: it says where these parishes
+   actually are, matches how the ministry centres refer to them, and makes no claim
+   in either direction. Republic of Ireland rows still resolve to "Ireland" via IE. */
+
+/* ISO alpha-2 -> display name. HCFM's operating countries first, then
+   everywhere a registration has plausibly come from. */
+const ISO = {
+  US:"United States", GB:"United Kingdom", IE:"Ireland", CA:"Canada", AU:"Australia",
+  NZ:"New Zealand", PH:"Philippines", IN:"India", BD:"Bangladesh", PK:"Pakistan",
+  LK:"Sri Lanka", NP:"Nepal", MM:"Myanmar", VN:"Vietnam", TH:"Thailand", ID:"Indonesia",
+  MY:"Malaysia", SG:"Singapore", JP:"Japan", KR:"South Korea", CN:"China", TW:"Taiwan",
+  HK:"Hong Kong", BR:"Brazil", MX:"Mexico", PE:"Peru", CL:"Chile", CO:"Colombia",
+  AR:"Argentina", EC:"Ecuador", BO:"Bolivia", VE:"Venezuela", UY:"Uruguay", PY:"Paraguay",
+  GT:"Guatemala", HN:"Honduras", SV:"El Salvador", NI:"Nicaragua", CR:"Costa Rica",
+  PA:"Panama", HT:"Haiti", DO:"Dominican Republic", CU:"Cuba", PR:"Puerto Rico",
+  JM:"Jamaica", TT:"Trinidad and Tobago", ES:"Spain", PT:"Portugal", FR:"France",
+  IT:"Italy", PL:"Poland", DE:"Germany", NL:"Netherlands", BE:"Belgium", AT:"Austria",
+  CH:"Switzerland", SE:"Sweden", NO:"Norway", DK:"Denmark", FI:"Finland", MT:"Malta",
+  GR:"Greece", CY:"Cyprus", UA:"Ukraine", RO:"Romania", HU:"Hungary", CZ:"Czechia",
+  SK:"Slovakia", LT:"Lithuania", LV:"Latvia", EE:"Estonia", HR:"Croatia", SI:"Slovenia",
+  RS:"Serbia", UG:"Uganda", KE:"Kenya", TZ:"Tanzania", NG:"Nigeria", GH:"Ghana",
+  CM:"Cameroon", ZM:"Zambia", MW:"Malawi", MZ:"Mozambique", ZA:"South Africa",
+  RW:"Rwanda", BI:"Burundi", ET:"Ethiopia", CD:"Democratic Republic of the Congo",
+  CG:"Republic of the Congo", CI:"Ivory Coast", SN:"Senegal", AE:"United Arab Emirates",
+  LB:"Lebanon", IL:"Israel", JO:"Jordan", EG:"Egypt", PG:"Papua New Guinea", FJ:"Fiji",
+  WS:"Samoa"
+};
+
+/* Google Places returns the country in the VIEWER's language, so the same
+   country arrives as "Brazil" from one browser and "Brasil" from another.
+   Left unmapped they show as two separate rows on a public scoreboard.
+   Keys are normalised: lower case, no accents, no punctuation. */
+const ALIAS = {
+  "usa":"US", "us":"US", "u s a":"US", "united states":"US",
+  "united states of america":"US", "estados unidos":"US", "etats unis":"US",
+  "uk":"GB", "u k":"GB", "gb":"GB", "united kingdom":"GB", "great britain":"GB",
+  "england":"GB", "scotland":"GB", "wales":"GB", "northern ireland":"GB",
+  "reino unido":"GB", "royaume uni":"GB",
+  "ireland":"IE", "republic of ireland":"IE", "eire":"IE", "irlanda":"IE",
+  "canada":"CA", "australia":"AU", "new zealand":"NZ",
+  "philippines":"PH", "pilipinas":"PH", "filipinas":"PH",
+  "india":"IN", "bharat":"IN", "bangladesh":"BD", "pakistan":"PK",
+  "sri lanka":"LK", "nepal":"NP", "myanmar":"MM", "burma":"MM",
+  "vietnam":"VN", "viet nam":"VN", "thailand":"TH", "indonesia":"ID",
+  "malaysia":"MY", "singapore":"SG", "japan":"JP", "nippon":"JP",
+  "south korea":"KR", "korea":"KR", "china":"CN", "taiwan":"TW", "hong kong":"HK",
+  "brazil":"BR", "brasil":"BR", "mexico":"MX", "peru":"PE", "chile":"CL",
+  "colombia":"CO", "argentina":"AR", "ecuador":"EC", "bolivia":"BO",
+  "venezuela":"VE", "uruguay":"UY", "paraguay":"PY", "guatemala":"GT",
+  "honduras":"HN", "el salvador":"SV", "nicaragua":"NI", "costa rica":"CR",
+  "panama":"PA", "haiti":"HT", "ayiti":"HT",
+  "dominican republic":"DO", "republica dominicana":"DO", "cuba":"CU",
+  "puerto rico":"PR", "jamaica":"JM", "trinidad and tobago":"TT",
+  "spain":"ES", "espana":"ES", "portugal":"PT", "france":"FR",
+  "italy":"IT", "italia":"IT", "poland":"PL", "polska":"PL",
+  "germany":"DE", "deutschland":"DE", "netherlands":"NL", "nederland":"NL",
+  "holland":"NL", "belgium":"BE", "belgie":"BE", "belgique":"BE",
+  "austria":"AT", "osterreich":"AT", "switzerland":"CH", "suisse":"CH",
+  "sweden":"SE", "sverige":"SE", "norway":"NO", "norge":"NO",
+  "denmark":"DK", "danmark":"DK", "finland":"FI", "suomi":"FI",
+  "malta":"MT", "greece":"GR", "cyprus":"CY", "ukraine":"UA",
+  "romania":"RO", "hungary":"HU", "magyarorszag":"HU", "czechia":"CZ",
+  "czech republic":"CZ", "slovakia":"SK", "lithuania":"LT", "latvia":"LV",
+  "estonia":"EE", "croatia":"HR", "hrvatska":"HR", "slovenia":"SI", "serbia":"RS",
+  "uganda":"UG", "kenya":"KE", "tanzania":"TZ", "nigeria":"NG", "ghana":"GH",
+  "cameroon":"CM", "cameroun":"CM", "zambia":"ZM", "malawi":"MW",
+  "mozambique":"MZ", "south africa":"ZA", "rwanda":"RW", "burundi":"BI",
+  "ethiopia":"ET",
+  "democratic republic of the congo":"CD", "dr congo":"CD", "drc":"CD",
+  "congo kinshasa":"CD", "republique democratique du congo":"CD",
+  "republic of the congo":"CG", "congo":"CG",
+  "ivory coast":"CI", "cote divoire":"CI", "senegal":"SN",
+  "united arab emirates":"AE", "uae":"AE", "lebanon":"LB", "liban":"LB",
+  "israel":"IL", "jordan":"JO", "egypt":"EG",
+  "papua new guinea":"PG", "fiji":"FJ", "samoa":"WS"
+};
+
+/* lower case, strip accents, strip punctuation, collapse spaces */
+function norm(s){
+  return String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"")
+    .toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
+}
+
+/* Northern Ireland arrives either as the words or as a BT postcode */
+function isNorthernIreland(place){
+  const p = String(place||"");
+  return /northern ireland/i.test(p) || /\bBT\d{1,2}\s*\d[A-Z]{2}\b/i.test(p);
+}
+
+/* A trailing token is only a country if it resolves. "MI 49684", "ON N0G 2J0"
+   and bare US state codes must never become rows on a public scoreboard. */
+function tokenToIso(tok){
+  const n = norm(tok);
+  if(!n) return null;
+  if(/\d/.test(n)) return null;          /* any digit means postcode, not country */
+  return ALIAS[n] || null;
+}
+
 function countryOf(r){
-  const t = (r.place_formatted||"").split(",").pop().trim();
-  return TIDY[t] || t || "Unknown";
+  /* 1. the field, once the developer populates it */
+  const cc = String(r.country_code||"").trim().toUpperCase();
+  if(cc && ISO[cc]){
+    if(cc === "GB" && isNorthernIreland(r.place_formatted)) return NORTHERN_IRELAND_AS;
+    return ISO[cc];
+  }
+  /* 2. the address text, walking back from the tail until something resolves */
+  const parts = String(r.place_formatted||"").split(",");
+  for(let i = parts.length - 1; i >= 0 && i >= parts.length - 3; i--){
+    const iso = tokenToIso(parts[i]);
+    if(iso){
+      if(iso === "GB" && isNorthernIreland(r.place_formatted)) return NORTHERN_IRELAND_AS;
+      return ISO[iso];
+    }
+  }
+  /* 3. honest about what it does not know */
+  return "Unknown";
 }
 function esc(s){ return s.replace(/[<>&]/g, m => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[m])); }
 
@@ -225,7 +424,11 @@ function render(rows){
   const by = {};
   rows.forEach(r => { const c = countryOf(r); (by[c] = by[c] || {people:0, count:0});
                       by[c].people += peopleIn(r); by[c].count++; });
-  const list = Object.entries(by).sort((a,b) => b[1].people - a[1].people || a[0].localeCompare(b[0]));
+  /* Unknown sits at the bottom whatever its size — it is a data gap, not a country */
+  const list = Object.entries(by).sort((a,b) =>
+        (a[0]==="Unknown") - (b[0]==="Unknown")
+        || b[1].people - a[1].people
+        || a[0].localeCompare(b[0]));
 
   $("s-reg").textContent  = fmt(rows.length);
   $("s-cty").textContent  = fmt(list.length);
@@ -250,7 +453,7 @@ function render(rows){
    Range header so the total stays correct all the way to 250,000. */
 async function fetchAll(){
   const url = `${SUPABASE_URL}/rest/v1/public_registrations`
-            + `?select=id,group_count,place_formatted,pin_type,is_family_rosary_home,created_at`
+            + `?select=id,group_count,place_formatted,country_code,pin_type,is_family_rosary_home,created_at`
             + `&order=created_at.desc`;
   const auth = {apikey:SUPABASE_KEY, Authorization:"Bearer "+SUPABASE_KEY};
   let from = 0, all = [];
